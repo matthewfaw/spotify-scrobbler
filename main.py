@@ -1,4 +1,3 @@
-# from __future__ import print_function
 import pylast, os, time
 from pymongo import MongoClient
 from datetime import datetime
@@ -38,22 +37,29 @@ def get_recent_tracks():
     '''
     return user.get_recent_tracks(limit=MAX_NUM_ITEMS, time_from=unix_timestamp(-FREQUENCY))
 
+def get_params(track, time):
+    return {
+            'artist': unicode(track.track.artist),
+            'name': unicode(track.track.title),
+            'album': unicode(track.album),
+            'playback_date': unicode(track.playback_date),
+            'timestamp': unicode(track.timestamp),
+            'post_time': unicode(time)
+            }
+
 def post_to_database(tracks=[]):
     currenttime = unix_timestamp()
-    for track in tracks:
-        newsong = Song({
-            "artist": unicode(track.track.artist),
-            "name": unicode(track.track.title),
-            "album": unicode(track.album),
-            "playback_date": unicode(track.playback_date),
-            "timestamp": unicode(track.timestamp),
-            "post_time": unicode(currenttime)
-        })
-        newsong.save()
-    return True
+    ret = True
 
-post_to_database(get_recent_tracks())
-# print get_recent_tracks()
+    for track in tracks:
+        params = get_params(track, currenttime)
+        newsong = Song(params)
+        try:
+            newsong.save()
+        except:
+            print 'Could not save song %s by artist %s from album %s' % (params['name'], params['artist'], params['album'])
+            ret = False
+    return ret
 
 def update_music():
     '''Return False to trigger the canary
@@ -66,16 +72,16 @@ def update_music():
 
 # AWS Lamda stuff
 def lambda_handler(event, context):
-    print('Checking {} at {}...'.format(SITE, event['time']))
+    print 'Adding new Spotify content at time %s' % (event['time'])
     try:
-        if not validate(urlopen(SITE).read()):
-            raise Exception('Validation failed')
+        if not update_music():
+            raise Exception('Could not post all songs')
     except:
-        print('Check failed!')
+        print 'Check failed!'
         raise
     else:
         print('Check passed!')
         return event['time']
     finally:
-        print('Check complete at {}'.format(str(datetime.now())))
+        print 'Check complete at %s' % str(datetime.now())
 
