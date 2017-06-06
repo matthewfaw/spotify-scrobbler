@@ -1,0 +1,15 @@
+Schemer-0.2.11.dist-info/DESCRIPTION.rst,sha256=LWKN8ZCVbb6JKdNC_MmdOx3l6i85Xar0DRy9mJHFA_8,133
+Schemer-0.2.11.dist-info/METADATA,sha256=dUI-DRlgaO0joQvs38ak-ksjrSaSBIvuUiIDQfSXeE8,404
+Schemer-0.2.11.dist-info/RECORD,,
+Schemer-0.2.11.dist-info/WHEEL,sha256=BtVfdXUcEYLcFjOkbIrCFRyXU4qszVPt-E9o3RWkSNw,93
+Schemer-0.2.11.dist-info/metadata.json,sha256=XwRO2ymt6UuYMFUJUb3TPb92OrXL0JwIVrgoIxWWNBA,524
+Schemer-0.2.11.dist-info/top_level.txt,sha256=_sdDraUoNJQsiI92l5mLLwFgJGBlw-wWEili7ZK_D8c,8
+schemer/__init__.py,sha256=-b8_kvgKvFM2hehWZNfg1gNWAUKg9qFBTtsjJYHds0Q,12389
+schemer/exceptions.py,sha256=UE46wNCAeMe_WzUP0bUu3e7z7H1ENHexc8GpAy7bU4g,879
+schemer/extension_types.py,sha256=Ro8r2-VB0GWLWhh2_D4DLIAgWO3Rb5tLwz6zQ-mEf4s,989
+schemer/validators.py,sha256=kpiwI8y3YqPkBUHn5psqzntd4yLk166b2nGlGYjszuk,4972
+Schemer-0.2.11.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+schemer/exceptions.pyc,,
+schemer/extension_types.pyc,,
+schemer/validators.pyc,,
+schemer/__init__.pyc,,
