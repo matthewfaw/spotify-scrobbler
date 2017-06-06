@@ -2,6 +2,7 @@
 import pylast, os, time
 from pymongo import MongoClient
 from datetime import datetime
+from models import getSongModel
 
 # Constants
 MAX_NUM_ITEMS = 200
@@ -16,12 +17,17 @@ DB_ID = os.environ['db_id'] #name of database
 
 # Initialize connection with database
 db = MongoClient(DB_URI)[DB_ID]
+# Acquire Models
+Song = getSongModel(db)
 
 # Initialize connection with Last.FM
 network = pylast.LastFMNetwork(api_key=API_KEY, 
                                api_secret=API_SECRET,
                                username=USERNAME)
 user = network.get_user(USERNAME)
+
+def get_db():
+    return db
 
 def unix_timestamp(delta_minutes=0):
     return int(time.time()) + delta_minutes*60
@@ -33,7 +39,21 @@ def get_recent_tracks():
     return user.get_recent_tracks(limit=MAX_NUM_ITEMS, time_from=unix_timestamp(-FREQUENCY))
 
 def post_to_database(tracks=[]):
+    currenttime = unix_timestamp()
+    for track in tracks:
+        newsong = Song({
+            "artist": unicode(track.track.artist),
+            "name": unicode(track.track.title),
+            "album": unicode(track.album),
+            "playback_date": unicode(track.playback_date),
+            "timestamp": unicode(track.timestamp),
+            "post_time": unicode(currenttime)
+        })
+        newsong.save()
     return True
+
+post_to_database(get_recent_tracks())
+# print get_recent_tracks()
 
 def update_music():
     '''Return False to trigger the canary
