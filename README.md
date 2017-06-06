@@ -9,6 +9,11 @@ I listen to a song for at least 30 seconds, and  LastFM lets me retrieve the las
 
 Note that this script requires several environment variables that must be initialized.
 
+## Deploying to AWS Lambda
+
+First, run `zip -r lambda.zip .` in the project root.
+Then, upload the resulting zip file.
+
 ## Primary dependencies:
 - [pymongo](http://api.mongodb.com/python/current/api/pymongo/)
 - [mongothon](https://github.com/gamechanger/mongothon)
