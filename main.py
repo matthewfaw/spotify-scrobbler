@@ -3,6 +3,9 @@ import pylast, os, time
 from pymongo import MongoClient
 from datetime import datetime
 
+# Constants
+MAX_NUM_ITEMS = 200
+
 # Get environment variables
 API_KEY = os.environ['api_key']
 API_SECRET = os.environ['api_secret']
@@ -27,7 +30,7 @@ def get_recent_tracks():
     '''
     Gets all songs listened to since the last check
     '''
-    return user.get_recent_tracks(limit=50, time_from=unix_timestamp(-FREQUENCY))
+    return user.get_recent_tracks(limit=MAX_NUM_ITEMS, time_from=unix_timestamp(-FREQUENCY))
 
 def post_to_database(tracks=[]):
     return True
