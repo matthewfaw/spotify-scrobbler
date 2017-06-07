@@ -11,6 +11,7 @@ song_schema = Schema({
     'playback_date': {'type': unicode, 'required': True},
     'timestamp': {'type': unicode, 'required': True},
     'post_time': {'type': unicode, 'required': True},
+    'username': {'type': unicode, 'required': True},
     })
 
 def getSongSchema():
