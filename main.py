@@ -29,7 +29,7 @@ def get_db():
     return db
 
 def unix_timestamp(delta_minutes=0):
-    return int(time.time()) + delta_minutes*60
+    return time.time() + delta_minutes*60
 
 def get_recent_tracks():
     '''
