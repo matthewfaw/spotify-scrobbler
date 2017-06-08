@@ -12,7 +12,7 @@ def update_music():
     '''
     recent = get_recent_tracks()
     print [str(track.track.artist) for track in recent]
-    return post_to_database(get_recent_tracks())
+    return post_to_database(recent)
 
 # AWS Lamda stuff
 def lambda_handler(event, context):
