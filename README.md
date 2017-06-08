@@ -11,7 +11,7 @@ Note that this script requires several environment variables that must be initia
 
 ## Deploying to AWS Lambda
 
-First, run `zip -r lambda.zip .` in the project root.
+First, run `zip -r lambda.zip . -x@exclude.lst` in the project root.
 Then, upload the resulting zip file.
 
 ## Primary dependencies:
