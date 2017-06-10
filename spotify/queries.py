@@ -12,4 +12,4 @@ s = Spotify(client_credentials_manager=client_credentials_manager)
 def get_genres(query):
     return s.search(q=query, type='artist')['artists']['items'][0]['genres']
 
-pprint(get_genres('Kanye West'))
+# pprint(get_genres('Kanye West'))
