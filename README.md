@@ -18,3 +18,4 @@ Then, upload the resulting zip file.
 - [pymongo](http://api.mongodb.com/python/current/api/pymongo/)
 - [mongothon](https://github.com/gamechanger/mongothon)
 - [pylast](https://github.com/pylast/pylast)
+- [spotipy](spotipy.readthedocs.io)
