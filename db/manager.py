@@ -8,6 +8,8 @@ from util.timehelper import unix_timestamp
 from collections import defaultdict
 from pprint import pprint
 
+EMPTY_TIME = '-1'
+
 # Environment variables
 DB_URI = os.environ['db_uri']
 DB_ID = os.environ['db_id'] #name of database
@@ -42,16 +44,16 @@ def post_to_database(tracks=[]):
             ret = False
     return ret
 
-def time_is_valid(before, after):
+def _time_is_valid(before, after):
     return before >= after
 
-def get_counts(search, field, before='-1', after='-2'):
+def _get_counts(search, field, before=EMPTY_TIME, after=EMPTY_TIME):
     '''
     Get frequency of field items between times before and after,
-    where the items are retrieved from search, and 
+    where the items are retrieved from search
     '''
-    before = str(unix_timestamp()) if before == '-1' else before
-    if not time_is_valid(before, after):
+    before = str(unix_timestamp()) if before == EMPTY_TIME else before
+    if not _time_is_valid(before, after):
         print 'Invalid search range'
         return None
     x = defaultdict(lambda: 0)
@@ -59,39 +61,30 @@ def get_counts(search, field, before='-1', after='-2'):
         x[song[field]] += 1
     return x
 
-def basic_search(before='-1', after='-2'):
-    before = str(unix_timestamp()) if before == '-1' else before
+def _basic_search(before=EMPTY_TIME, after=EMPTY_TIME):
     return Song.find({ 'timestamp': { '$lt': before, '$gt': after } })
 
-def get_top(field, n):
+def get_top(field, n, before=EMPTY_TIME, after=EMPTY_TIME):
     '''
+    Gets the top n field values from the database
     field: The field over which to compute statistics
     n: The number of results to return
     '''
-    x = defaultdict(lambda: 0)
-    for song in Song.find().sort("timestamp"):
-        x[song[field]] += 1
+    x = _get_counts(lambda b,a: _basic_search(b,a).sort('timestamp'), field, before, after)
     topkeys = sorted(x, key=x.get, reverse=True)[0:n]
     topvals = [x[k] for k in topkeys]
     return zip(topkeys, topvals)
 
-def get_distinct(field, before='-1', after='-2'):
+
+def get_distinct(field, before=EMPTY_TIME, after=EMPTY_TIME):
     '''
+    Gets the distinct values of field in the database
     field: The field over which to compute statistics
     before: Unix timestamp before which to search
     after: Unix timestamp after which to search
     Returns the distinct field values that occur over the specified range
     '''
-    x = []
-    before = str(unix_timestamp()) if before == '-1' else before
-    if before < after:
-        print 'Invalid search range'
-        return []
-    for song in Song.find({ 'timestamp': { '$lt': before, '$gt': after } }).distinct(field):
-        x.append(song)
-    return x
+    return sorted(_get_counts(_basic_search, field, before, after).keys())
 
-# top = get_top('artist',5)
-# for x in top:
-    # print x[0], x[1]
-# print get_distinct('artist')
+# pprint(get_top('name',5))
+# pprint(get_distinct('artist'))
