@@ -1,5 +1,5 @@
 from mongothon import create_model
-from schemas import getSongSchema
+from schemas import get_song_schema
 
-def getSongModel(db):
-    return create_model(getSongSchema(), db['song'])
+def get_song_model(db):
+    return create_model(get_song_schema(), db['song'])

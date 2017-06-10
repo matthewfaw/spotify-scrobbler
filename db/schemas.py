@@ -14,5 +14,5 @@ song_schema = Schema({
     'username': {'type': unicode, 'required': True},
     })
 
-def getSongSchema():
+def get_song_schema():
     return song_schema

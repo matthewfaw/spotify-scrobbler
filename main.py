@@ -2,8 +2,8 @@ from datetime import datetime
 from db.manager import post_to_database
 from lastfm.contact import get_recent_tracks
 
-# print get_recent_tracks()
-# print post_to_database()
+print get_recent_tracks()
+print post_to_database()
 
 def update_music():
     '''Return False to trigger the canary
