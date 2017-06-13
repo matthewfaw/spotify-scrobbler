@@ -30,7 +30,7 @@ def _get_params(track, time):
             'username': unicode(track.track.network.username)
             }
 
-def post_to_database(tracks=[]):
+def post_tracks_to_database(tracks=[]):
     currenttime = unix_timestamp()
     ret = True
 
@@ -43,6 +43,8 @@ def post_to_database(tracks=[]):
             print 'Could not save song %s by artist %s from album %s for user %s' % (params['name'], params['artist'], params['album'], params['username'])
             ret = False
     return ret
+
+def post_stats_to_database(stats=[])
 
 def _time_is_valid(before, after):
     return before >= after
