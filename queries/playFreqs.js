@@ -1,0 +1,33 @@
+db.song.aggregate([
+    {$group: 
+        {
+            _id:{
+                name:"$name",
+                artist:"$artist"
+            }, 
+            count:{
+                $sum:1
+            }
+        }}, 
+    {$group:
+        {
+            _id:"$_id.artist", 
+            songs:{
+                $addToSet:{
+                    name:"$_id.name",
+                    numListens:"$count"
+                }
+            },
+            count:{$sum:"$count"}}},
+    {$sort: 
+        {
+            count:-1,
+        }
+    },
+    //{$project:
+        //{
+            //_id:"$_id"
+        //}
+    //},
+    //{$limit:1},
+]).pretty()
